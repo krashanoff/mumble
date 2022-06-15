@@ -432,6 +432,7 @@ public:
 	void readChannelPrivs(Channel *c);
 	void setLastChannel(const User *u);
 	int readLastChannel(int id);
+	void recordMessage(const TextMessage *tm);
 
 	/// Set last_disconnect of a registered user to the current time
 	void setLastDisconnect(const User *u);

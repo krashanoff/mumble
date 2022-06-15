@@ -328,6 +328,9 @@ void MainWindow::msgPermissionDenied(const MumbleProto::PermissionDenied &msg) {
 void MainWindow::msgUDPTunnel(const MumbleProto::UDPTunnel &) {
 }
 
+/// TODO
+void MainWindow::msgHistory(const MumbleProto::History &) {}
+
 /// This message is being received when the server informs this client about changed users. This might be because there
 /// is a new user or because an existing user changed somehow (this includes things like a changed ID, changed name,
 /// changed priority speaker status, changed channel, etc.). This function will match the local user representation

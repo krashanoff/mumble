@@ -16,6 +16,7 @@ class User;
 class Connection;
 class QSqlDatabase;
 class QSqlQuery;
+class TextMessage;
 
 class ServerDB : public QObject {
 	Q_OBJECT;

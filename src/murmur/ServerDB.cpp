@@ -2514,15 +2514,6 @@ void ServerDB::deleteServer(int server_id) {
 	SQLEXEC();
 }
 
-void ServerDB::clearLastDisconnect(Server *server) {
-	TransactionHolder th;
-	QSqlQuery &query = *th.qsqQuery;
-
-	SQLPREP("UPDATE `%1users` SET `last_disconnect` = NULL WHERE `server_id` = ?");
-	query.addBindValue(server->iServerNum);
-	SQLEXEC();
-}
-
 QList<TextMessage> ServerDB::getHistory(int server_id, unsigned int user_id, QList< unsigned int > user_ids,
 										   QList< unsigned int > channel_ids, QList< unsigned int > tree_ids,
 										   unsigned int before, unsigned int after, unsigned int around) {
@@ -2534,24 +2525,24 @@ QList<TextMessage> ServerDB::getHistory(int server_id, unsigned int user_id, QLi
 	SQLEXEC();
 
 	// TODO: implement
-	if (query.next()) {
-		int message_id = query.value(0).toInt();
-		if (query.value(1).isNull()) {
-			return qhChannels.contains(cid) ? cid : -1;
-		}
-		QDateTime last_disconnect = QDateTime::fromString(query.value(1).toString(), Qt::ISODate);
-		last_disconnect.setTimeSpec(Qt::UTC);
-		QDateTime now = QDateTime::currentDateTime();
-		now           = now.toTimeSpec(Qt::UTC);
+	// if (query.next()) {
+	// 	int message_id = query.value(0).toInt();
+	// 	if (query.value(1).isNull()) {
+	// 		return qhChannels.contains(cid) ? cid : -1;
+	// 	}
+	// 	QDateTime last_disconnect = QDateTime::fromString(query.value(1).toString(), Qt::ISODate);
+	// 	last_disconnect.setTimeSpec(Qt::UTC);
+	// 	QDateTime now = QDateTime::currentDateTime();
+	// 	now           = now.toTimeSpec(Qt::UTC);
 
-		int duration = Meta::mp.iRememberChanDuration;
-		if (duration <= 0 || last_disconnect.secsTo(now) <= duration) {
-			if (qhChannels.contains(cid))
-				return cid;
-		}
-	}
+	// 	int duration = Meta::mp.iRememberChanDuration;
+	// 	if (duration <= 0 || last_disconnect.secsTo(now) <= duration) {
+	// 		if (qhChannels.contains(cid))
+	// 			return cid;
+	// 	}
+	// }
 
-	return QList();
+	return QList<TextMessage>();
 }
 
 void Server::recordMessage(const TextMessage *tm) {
@@ -2559,8 +2550,10 @@ void Server::recordMessage(const TextMessage *tm) {
 	QSqlQuery &query = *th.qsqQuery;
 
 	SQLPREP("INSERT INTO `%1messages` ...");
-	query.addBindValue(...);
+	// query.addBindValue(...);
 	SQLEXEC();
 
 	return;
 }
+
+void Server::msgHistory(ServerUser *, MumbleProto::History &) {}

@@ -271,6 +271,36 @@ message TextMessage {
 	required string message = 5;
 }
 
+// The user may wish to query the server's message history.
+// This is accomplished by sending a query for messages meeting given
+// constraints. The server replies with a list of in-order messages
+// meeting the criteria.
+message History {
+	message Query {
+		// Filter by who sent the message.
+		optional uint32 actor = 1;
+		// Filter by users to whom the message was sent.
+		repeated uint32 session = 2;
+		// Filter by channels to which messages were sent.
+		repeated uint32 channel_id = 3;
+		// Filter by channels to which messages were sent, including
+		// the channels' ancestors.
+		repeated uint32 tree_id = 4;
+		// Message content should match the given query.
+		optional string message = 5;
+		// Messages sent before a given timestamp.
+		optional int64 before = 6;
+		// Messages sent after a given timestamp.
+		optional int64 after = 7;
+		// Messages sent around a given timestamp.
+		optional int64 around = 8;
+	}
+
+	message List {
+		repeated TextMessage entries = 1;
+	}
+}
+
 message PermissionDenied {
 	enum DenyType {
 		// Operation denied for other reason, see reason field.

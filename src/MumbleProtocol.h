@@ -47,7 +47,8 @@
 	PROCESS_MUMBLE_TCP_MESSAGE(RequestBlob, 23)         \
 	PROCESS_MUMBLE_TCP_MESSAGE(ServerConfig, 24)        \
 	PROCESS_MUMBLE_TCP_MESSAGE(SuggestConfig, 25)       \
-	PROCESS_MUMBLE_TCP_MESSAGE(PluginDataTransmission, 26)
+	PROCESS_MUMBLE_TCP_MESSAGE(PluginDataTransmission, 26) \
+	PROCESS_MUMBLE_TCP_MESSAGE(History, 27)
 
 /**
  * "X-macro" for all Mumble Protobuf UDP messages types.
